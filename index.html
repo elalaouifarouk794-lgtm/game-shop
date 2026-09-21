@@ -1,59 +1,314 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Shop</title>
+
+  <title>SportAI - Sports & AI</title>
 
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: #111;
+    }
+
+    body {
+      background: #0b1220;
       color: white;
-      text-align: center;
+      transition: 0.3s;
+    }
+
+    body.light {
+      background: #f3f6fb;
+      color: #111827;
     }
 
     header {
-      background: #6c2cff;
-      padding: 25px;
+      background: #111a2e;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #263452;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 35px;
-    }
-
-    .container {
-      padding: 30px;
-    }
-
-    .card {
-      background: #222;
-      padding: 25px;
-      margin: 20px auto;
-      max-width: 400px;
-      border-radius: 15px;
-    }
-
-    .price {
+    .logo {
       font-size: 25px;
-      color: #00ff88;
+      font-weight: bold;
+      color: #28e07b;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
       font-weight: bold;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 12px 25px;
-      background: #6c2cff;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      margin-top: 10px;
+    nav a:hover {
+      color: #28e07b;
     }
 
-    .btn:hover {
-      background: #8b5cff;
+    .theme-btn {
+      background: #28e07b;
+      border: none;
+      padding: 9px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hero {
+      min-height: 500px;
+      padding: 90px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #28e07b;
+    }
+
+    .hero p {
+      color: #aab5cc;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      background: #28e07b;
+      color: #06130b;
+      padding: 14px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero-card {
+      width: 350px;
+      padding: 30px;
+      background: linear-gradient(145deg, #17233c, #0f172a);
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.3);
+    }
+
+    .hero-card h2 {
+      margin-bottom: 20px;
+    }
+
+    .score {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      margin: 10px 0;
+      background: #202d48;
+      border-radius: 10px;
+    }
+
+    section {
+      padding: 70px 7%;
+    }
+
+    .section-title {
+      font-size: 35px;
+      margin-bottom: 35px;
+    }
+
+    .sports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .sport-card {
+      background: #111a2e;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      border: 1px solid #263452;
+      transition: .3s;
+    }
+
+    .sport-card:hover {
+      transform: translateY(-7px);
+      border-color: #28e07b;
+    }
+
+    .sport-icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .matches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .match {
+      background: #111a2e;
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #263452;
+    }
+
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      color: #9aa7c0;
+      margin-bottom: 20px;
+    }
+
+    .teams {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    .team {
+      width: 40%;
+      font-weight: bold;
+    }
+
+    .team-icon {
+      font-size: 35px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .vs {
+      color: #28e07b;
+      font-weight: bold;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .stat {
+      background: #111a2e;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    .stat h3 {
+      font-size: 35px;
+      color: #28e07b;
+    }
+
+    .ai-box {
+      max-width: 850px;
+      margin: auto;
+      background: #111a2e;
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid #263452;
+    }
+
+    .chat {
+      height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      background: #0a1020;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+
+    .bot {
+      background: #202d48;
+    }
+
+    .user {
+      background: #28e07b;
+      color: #06130b;
+      margin-left: auto;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .chat-input button {
+      background: #28e07b;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #080d18;
+      color: #8c99b2;
+    }
+
+    @media (max-width: 800px) {
+      nav {
+        display: none;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 60px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero-card {
+        width: 100%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -61,28 +316,397 @@
 <body>
 
   <header>
-    <h1>🎮 GAME SHOP</h1>
-    <p>Jeux & Services Gaming</p>
+    <div class="logo">⚡ SportAI</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#sports">Sports</a>
+      <a href="#matches">Matches</a>
+      <a href="#ai">AI Assistant</a>
+    </nav>
+
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
   </header>
 
-  <div class="container">
 
-    <div class="card">
-      <h2>🎮 Services Gaming</h2>
-      <p>Installation et services pour consoles.</p>
-      <p class="price">À partir de 25 DH</p>
-      <a class="btn" href="https://www.instagram.com/" target="_blank">
-        Nous contacter
+  <section class="hero" id="home">
+
+    <div class="hero-text">
+
+      <h1>
+        Your World of
+        <span>Sport + AI</span>
+      </h1>
+
+      <p>
+        Discover sports, follow matches, explore statistics
+        and ask our AI Sport Assistant your questions.
+      </p>
+
+      <a class="hero-btn" href="#ai">
+        🤖 Try Sport AI
       </a>
+
     </div>
 
-    <div class="card">
-      <h2>🕹️ Jeux</h2>
-      <p>Découvrez nos jeux et offres disponibles.</p>
-      <p class="price">Prix intéressants</p>
+
+    <div class="hero-card">
+
+      <h2>🔥 Live Center</h2>
+
+      <div class="score">
+        <span>⚽ Madrid</span>
+        <strong>2 - 1</strong>
+      </div>
+
+      <div class="score">
+        <span>🔴 Arsenal</span>
+        <strong>1 - 0</strong>
+      </div>
+
+      <div class="score">
+        <span>🔵 Chelsea</span>
+        <strong>2 - 2</strong>
+      </div>
+
     </div>
 
-  </div>
+  </section>
+
+
+  <section id="sports">
+
+    <h2 class="section-title">🏆 Sports</h2>
+
+    <div class="sports-grid">
+
+      <div class="sport-card">
+        <div class="sport-icon">⚽</div>
+        <h3>Football</h3>
+        <p>Matches, teams and players</p>
+      </div>
+
+      <div class="sport-card">
+        <div class="sport-icon">🏀</div>
+        <h3>Basketball</h3>
+        <p>Scores and statistics</p>
+      </div>
+
+      <div class="sport-card">
+        <div class="sport-icon">🎾</div>
+        <h3>Tennis</h3>
+        <p>Tournaments and players</p>
+      </div>
+
+      <div class="sport-card">
+        <div class="sport-icon">🏎️</div>
+        <h3>Formula 1</h3>
+        <p>Races and drivers</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section id="matches">
+
+    <h2 class="section-title">⚡ Today's Matches</h2>
+
+    <div class="matches">
+
+      <div class="match">
+
+        <div class="match-header">
+          <span>⚽ Football</span>
+          <span>20:00</span>
+        </div>
+
+        <div class="teams">
+
+          <div class="team">
+            <span class="team-icon">⚪</span>
+            Real Madrid
+          </div>
+
+          <div class="vs">VS</div>
+
+          <div class="team">
+            <span class="team-icon">🔵</span>
+            Barcelona
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="match">
+
+        <div class="match-header">
+          <span>🏀 Basketball</span>
+          <span>21:30</span>
+        </div>
+
+        <div class="teams">
+
+          <div class="team">
+            <span class="team-icon">🟣</span>
+            Lakers
+          </div>
+
+          <div class="vs">VS</div>
+
+          <div class="team">
+            <span class="team-icon">🟢</span>
+            Celtics
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="match">
+
+        <div class="match-header">
+          <span>🎾 Tennis</span>
+          <span>18:00</span>
+        </div>
+
+        <div class="teams">
+
+          <div class="team">
+            <span class="team-icon">🎾</span>
+            Player A
+          </div>
+
+          <div class="vs">VS</div>
+
+          <div class="team">
+            <span class="team-icon">🎾</span>
+            Player B
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section>
+
+    <h2 class="section-title">📊 Sport Statistics</h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <h3>120+</h3>
+        <p>Teams</p>
+      </div>
+
+      <div class="stat">
+        <h3>500+</h3>
+        <p>Players</p>
+      </div>
+
+      <div class="stat">
+        <h3>50+</h3>
+        <p>Competitions</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section id="ai">
+
+    <h2 class="section-title">🤖 Sport AI Assistant</h2>
+
+    <div class="ai-box">
+
+      <div class="chat" id="chat">
+
+        <div class="message bot">
+          👋 Hi! I'm SportAI. Ask me something about football,
+          basketball, tennis or sports rules!
+        </div>
+
+      </div>
+
+      <div class="chat-input">
+
+        <input
+          id="userInput"
+          type="text"
+          placeholder="Ask SportAI..."
+          onkeydown="if(event.key === 'Enter') sendMessage()"
+        >
+
+        <button onclick="sendMessage()">
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+
+    <p>© 2026 SportAI — Sports & Artificial Intelligence</p>
+
+  </footer>
+
+
+  <script>
+
+    function toggleTheme() {
+
+      document.body.classList.toggle("light");
+
+      const button = document.querySelector(".theme-btn");
+
+      if (document.body.classList.contains("light")) {
+        button.textContent = "☀️";
+      } else {
+        button.textContent = "🌙";
+      }
+
+    }
+
+
+    function addMessage(text, type) {
+
+      const chat = document.getElementById("chat");
+
+      const message = document.createElement("div");
+
+      message.className = "message " + type;
+
+      message.textContent = text;
+
+      chat.appendChild(message);
+
+      chat.scrollTop = chat.scrollHeight;
+
+    }
+
+
+    function getAIResponse(question) {
+
+      const q = question.toLowerCase();
+
+      if (
+        q.includes("football") ||
+        q.includes("soccer") ||
+        q.includes("كرة القدم")
+      ) {
+
+        return "⚽ Football is played between two teams. The main objective is to score more goals than the opponent.";
+
+      }
+
+      if (
+        q.includes("offside") ||
+        q.includes("تسلل")
+      ) {
+
+        return "⚽ Offside is a football rule that limits where an attacking player can be when the ball is played by a teammate.";
+
+      }
+
+      if (
+        q.includes("basketball") ||
+        q.includes("كرة السلة")
+      ) {
+
+        return "🏀 Basketball is played by two teams. Players score by putting the ball through the opponent's basket.";
+
+      }
+
+      if (
+        q.includes("tennis") ||
+        q.includes("تنس")
+      ) {
+
+        return "🎾 Tennis is normally played between two players or two teams. Players win points, games and sets.";
+
+      }
+
+      if (
+        q.includes("formula") ||
+        q.includes("f1")
+      ) {
+
+        return "🏎️ Formula 1 is a motorsport championship featuring single-seat racing cars and Grand Prix events.";
+
+      }
+
+      if (
+        q.includes("goal") ||
+        q.includes("هدف")
+      ) {
+
+        return "⚽ In football, a goal is scored when the whole ball crosses the goal line between the goalposts and beneath the crossbar.";
+
+      }
+
+      if (
+        q.includes("player") ||
+        q.includes("لاعب")
+      ) {
+
+        return "🏆 SportAI can help you learn about sports players, positions, rules and statistics.";
+
+      }
+
+      if (
+        q.includes("hello") ||
+        q.includes("hi") ||
+        q.includes("سلام")
+      ) {
+
+        return "👋 Hello! Ask me anything about sports.";
+
+      }
+
+      return "🤖 I'm your SportAI assistant! Try asking me about football, basketball, tennis, Formula 1, goals, players or sports rules.";
+
+    }
+
+
+    function sendMessage() {
+
+      const input = document.getElementById("userInput");
+
+      const question = input.value.trim();
+
+      if (question === "") {
+        return;
+      }
+
+      addMessage(question, "user");
+
+      input.value = "";
+
+      setTimeout(function() {
+
+        const response = getAIResponse(question);
+
+        addMessage(response, "bot");
+
+      }, 500);
+
+    }
+
+  </script>
 
 </body>
 </html>
