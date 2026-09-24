@@ -1751,5 +1751,26 @@ send();
 </script>
 
 
+<!-- LIVE FOOTBALL -->
+<section style="max-width:1200px;margin:40px auto;padding:20px;">
+  <h2 style="text-align:center;">⚽ Live Football</h2>
+  <api-sports-widget data-type="games"></api-sports-widget>
+</section>
+
+<script type="module" crossorigin
+src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
+
+<api-sports-widget
+  data-type="config"
+  data-sport="football"
+  data-key="YOUR_API_KEY"
+  data-lang="en"
+  data-theme="dark"
+  data-show-error="true"
+  data-show-logos="true"
+  data-refresh="60"
+  data-tab="games">
+</api-sports-widget>
+
 </body>
-</html>
+</html></body>
