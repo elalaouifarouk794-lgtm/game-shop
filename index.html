@@ -1752,6 +1752,111 @@ send();
 
 
 <!-- LIVE FOOTBALL -->
+<section id="live-football" style="max-width:1200px;margin:40px auto;padding:20px;">
+  <h2 style="text-align:center;">⚽ Live Football</h2>
+
+  <div id="live-games" style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:15px;
+    margin-top:20px;">
+  </div>
+
+  <p id="live-loading" style="text-align:center;">
+    Loading live matches...
+  </p>
+</section>
+
+<script>
+async function loadLiveFootball() {
+  const box = document.getElementById("live-games");
+  const loading = document.getElementById("live-loading");
+
+  try {
+    const response = await fetch("./data/live.json?t=" + Date.now());
+    const data = await response.json();
+
+    loading.style.display = "none";
+
+    if (!data.response || data.response.length === 0) {
+      box.innerHTML = `
+        <div style="text-align:center;padding:25px;">
+          ⚽ No live matches right now
+        </div>
+      `;
+      return;
+    }
+
+    data.response.forEach(match => {
+      const fixture = match.fixture;
+      const league = match.league;
+      const home = match.teams.home;
+      const away = match.teams.away;
+
+      const status =
+        fixture.status.short === "HT"
+          ? "Half Time"
+          : fixture.status.elapsed
+            ? fixture.status.elapsed + "'"
+            : fixture.status.short;
+
+      const card = document.createElement("div");
+
+      card.style.cssText = `
+        background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.15);
+        border-radius:16px;
+        padding:20px;
+        text-align:center;
+      `;
+
+      card.innerHTML = `
+        <div style="font-size:13px;opacity:.7;margin-bottom:12px;">
+          ${league.name}
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-around;gap:10px;">
+
+          <div style="flex:1;">
+            <img src="${home.logo}" width="45" height="45"
+                 style="object-fit:contain;"><br>
+            <strong>${home.name}</strong>
+          </div>
+
+          <div>
+            <div style="font-size:25px;font-weight:bold;">
+              ${match.goals.home ?? 0} - ${match.goals.away ?? 0}
+            </div>
+            <div style="color:#ff5570;font-weight:bold;">
+              🔴 ${status}
+            </div>
+          </div>
+
+          <div style="flex:1;">
+            <img src="${away.logo}" width="45" height="45"
+                 style="object-fit:contain;"><br>
+            <strong>${away.name}</strong>
+          </div>
+
+        </div>
+      `;
+
+      box.appendChild(card);
+    });
+
+  } catch (error) {
+    loading.textContent = "⚠️ Unable to load live matches.";
+    console.error(error);
+  }
+}
+
+loadLiveFootball();
+
+setInterval(loadLiveFootball, 120000);
+</script>
+
+</body>
+</html><!-- LIVE FOOTBALL -->
 <section style="max-width:1200px;margin:40px auto;padding:20px;">
   <h2 style="text-align:center;">⚽ Live Football</h2>
   <api-sports-widget data-type="games"></api-sports-widget>
